@@ -44,13 +44,13 @@ class Plugin_no1_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -98,6 +98,23 @@ class Plugin_no1_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin_no1-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Adds a top level admin menu for the plugin to the dashboard
+	 */
+	public function add_admin_menu() {
+		add_menu_page(
+			__( 'Plugin No 1 Settings Page', 'ow_plugin_no1' ),
+			__( 'Plugin No 1', 'ow_plugin_no1' ),
+			'manage_options',
+			'plugin-no1',
+			function() {
+				echo "I'm page content";
+			},
+			'dashicons-awards',
+			60,
+		);
 	}
 
 }

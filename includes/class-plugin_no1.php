@@ -143,7 +143,7 @@ class Plugin_no1 {
 
 	}
 
-	/**
+	/** meu 
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -156,6 +156,8 @@ class Plugin_no1 {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$this->loader->add_action('admin_menu', $plugin_admin, 'add_admin_menu' );
 
 	}
 
