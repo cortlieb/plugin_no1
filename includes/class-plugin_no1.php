@@ -9,8 +9,8 @@
  * @link       https://www.ortliebweb.com
  * @since      1.0.0
  *
- * @package    Plugin_no1
- * @subpackage Plugin_no1/includes
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Plugin_no1
- * @subpackage Plugin_no1/includes
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/includes
  * @author     Christian Ortlieb <info@ortliebweb.com>
  */
-class Plugin_no1 {
+class Plugin_No1 {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Plugin_no1 {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Plugin_no1_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Plugin_No1_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -78,6 +78,7 @@ class Plugin_no1 {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_shortcode_hooks();
 
 	}
 
@@ -86,10 +87,10 @@ class Plugin_no1 {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Plugin_no1_Loader. Orchestrates the hooks of the plugin.
-	 * - Plugin_no1_i18n. Defines internationalization functionality.
-	 * - Plugin_no1_Admin. Defines all hooks for the admin area.
-	 * - Plugin_no1_Public. Defines all hooks for the public side of the site.
+	 * - Plugin_No1_Loader. Orchestrates the hooks of the plugin.
+	 * - Plugin_No1_i18n. Defines internationalization functionality.
+	 * - Plugin_No1_Admin. Defines all hooks for the admin area.
+	 * - Plugin_No1_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -122,14 +123,18 @@ class Plugin_no1 {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-plugin_no1-public.php';
 
-		$this->loader = new Plugin_no1_Loader();
+		$this->loader = new Plugin_No1_Loader();
 
+		/**
+		 * The class responsible for defining all shortcode functions
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin_no1-shortcodes.php';
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Plugin_no1_i18n class in order to set the domain and to register the hook
+	 * Uses the Plugin_No1_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,13 +142,13 @@ class Plugin_no1 {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Plugin_no1_i18n();
+		$plugin_i18n = new Plugin_No1_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
-	/** meu 
+	/** 
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -152,7 +157,7 @@ class Plugin_no1 {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Plugin_no1_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Plugin_No1_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -170,7 +175,7 @@ class Plugin_no1 {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Plugin_no1_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Plugin_No1_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -201,7 +206,7 @@ class Plugin_no1 {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Plugin_no1_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Plugin_No1_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -215,6 +220,23 @@ class Plugin_no1 {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Define all short codes for the plugin
+	 */
+	public function define_shortcode_hooks() {
+
+		$plugin_shortcodes = new Plugin_No1_Shortcodes(
+			$this->get_plugin_name(),
+			$this->get_version()
+		);
+
+		add_shortcode(
+			'remember_form',
+			array( $plugin_shortcodes, 'remember_form' )
+		);
+
 	}
 
 }

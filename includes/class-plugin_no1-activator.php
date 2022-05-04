@@ -6,8 +6,8 @@
  * @link       https://www.ortliebweb.com
  * @since      1.0.0
  *
- * @package    Plugin_no1
- * @subpackage Plugin_no1/includes
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    Plugin_no1
- * @subpackage Plugin_no1/includes
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/includes
  * @author     Christian Ortlieb <info@ortliebweb.com>
  */
-class Plugin_no1_Activator {
+class Plugin_No1_Activator {
 
 	/**
 	 * Short Description. (use period)

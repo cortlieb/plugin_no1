@@ -10,7 +10,7 @@
  *
  * @link              https://www.ortliebweb.com
  * @since             1.0.0
- * @package           Plugin_no1
+ * @package           Plugin_No1
  *
  * @wordpress-plugin
  * Plugin Name:       Plugin No 1
@@ -43,7 +43,7 @@ define( 'PLUGIN_NO1_VERSION', '1.0.0' );
  */
 function activate_plugin_no1() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin_no1-activator.php';
-	Plugin_no1_Activator::activate();
+	Plugin_No1_Activator::activate();
 }
 
 /**
@@ -52,7 +52,7 @@ function activate_plugin_no1() {
  */
 function deactivate_plugin_no1() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin_no1-deactivator.php';
-	Plugin_no1_Deactivator::deactivate();
+	Plugin_No1_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_plugin_no1' );
@@ -75,7 +75,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-plugin_no1.php';
  */
 function run_plugin_no1() {
 
-	$plugin = new Plugin_no1();
+	$plugin = new Plugin_No1();
 	$plugin->run();
 
 }

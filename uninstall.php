@@ -22,7 +22,7 @@
  * @link       https://www.ortliebweb.com
  * @since      1.0.0
  *
- * @package    Plugin_no1
+ * @package    Plugin_No1
  */
 
 // If uninstall not called from WordPress, then exit.

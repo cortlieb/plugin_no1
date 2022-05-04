@@ -8,8 +8,8 @@
  * @link       https://www.ortliebweb.com
  * @since      1.0.0
  *
- * @package    Plugin_no1
- * @subpackage Plugin_no1/public/partials
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/public/partials
  */
 ?>
 

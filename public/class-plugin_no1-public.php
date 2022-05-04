@@ -6,8 +6,8 @@
  * @link       https://www.ortliebweb.com
  * @since      1.0.0
  *
- * @package    Plugin_no1
- * @subpackage Plugin_no1/public
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Plugin_no1
- * @subpackage Plugin_no1/public
+ * @package    Plugin_No1
+ * @subpackage Plugin_No1/public
  * @author     Christian Ortlieb <info@ortliebweb.com>
  */
-class Plugin_no1_Public {
+class Plugin_No1_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,10 +65,10 @@ class Plugin_no1_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_no1_Loader as all of the hooks are defined
+		 * defined in Plugin_No1_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Plugin_no1_Loader will then create the relationship
+		 * The Plugin_No1_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -88,10 +88,10 @@ class Plugin_no1_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_no1_Loader as all of the hooks are defined
+		 * defined in Plugin_No1_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Plugin_no1_Loader will then create the relationship
+		 * The Plugin_No1_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
