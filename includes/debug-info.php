@@ -19,3 +19,14 @@ echo '</p>';
 die();
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin_no1-shortcodes.php';
+
+/**
+ * Ausgabe aktueller verzeichnisse
+ */
+echo 'Directory of the current calling script: ' . __DIR__;
+echo '<br />';
+echo 'Current working directory: ' . getcwd();
+echo '<br />';
+
+
+
