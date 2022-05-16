@@ -56,6 +56,7 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			add_action( 'get_footer', array( $this, 'maybe_enqueue_scripts' ) );
 			// register a handler for form 'remember_form'
 			add_action( 'admin_post_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
+			add_action( 'admin_post_nopriv_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
 		}
 
 		public function remember_form( $atts, $content ) {
@@ -63,7 +64,9 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			ob_start();
 
 			if ( isset( $_REQUEST['info'] ) ) {
-				echo '<p>Ergebnis Formularauswertung: </p>' . $_REQUEST['info'] . '<br>';
+				echo '<p>Ergebnis Formularauswertung: ' . $_REQUEST['info'] . '</p>';
+				echo '<p>Hallo ' . esc_html( $_REQUEST['response']['name'] ) . ', das hat geklappt.</p>';
+				echo '<p>Wir werden dir zur gewünschten Zeit eine Erinnerung an ' . esc_html( $_REQUEST['response']['email'] ) . ' schicken!</p>';
 			} else {
 				include_once 'wp-content/plugins/plugin_no1/public/partials/partials-remember-form-view.php'; // TODO: besseres Konstruieren des Pfades (s. Rocket-Books).
 			};
@@ -73,7 +76,8 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 
 		public function no1_evaluate_remember_form() {
 			status_header( 200 );
-			echo '<h2>Hier ist die Formularauswertung</h2>';
+			// echo '<h2>Hier ist die Formularauswertung</h2>';
+			// die();
 
 			// Check if nonce is correct.
 			if ( isset( $_POST['no1_remember_form_nonce'] ) && wp_verify_nonce( $_POST['no1_remember_form_nonce'], 'no1_submit_remember_form' ) ) {
@@ -85,9 +89,11 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 				$form_eva_result = 'failed_nonce';
 			}
 
-			// echo 'Formularauswertung: ' . $form_eva_result . '<br>';
-			// var_dump( $_POST );
-			// die();
+			$result_email_send = no1_send_remember_mail();
+
+			echo 'Formularauswertung: ' . $form_eva_result . '<br>';
+			var_dump( $result_email_send );
+			die();
 
 			wp_redirect(
 				esc_url_raw(
@@ -100,6 +106,7 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 					)
 				)
 			);
+			exit;
 
 			// exit - ja: wp_redirect muss von exit gefolgt werden?
 		}
