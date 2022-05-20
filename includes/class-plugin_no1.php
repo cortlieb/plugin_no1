@@ -78,6 +78,7 @@ class Plugin_No1 {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_post_type_hooks();
 		$this->define_shortcode_hooks();
 
 	}
@@ -109,18 +110,18 @@ class Plugin_No1 {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin_no1-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin_no1-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-plugin_no1-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-plugin-no1-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -131,9 +132,14 @@ class Plugin_No1 {
 		$this->loader = new Plugin_No1_Loader();
 
 		/**
+		 * The class responsible for registering custom post types
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-post-types.php';
+
+		/**
 		 * The class responsible for defining all shortcode functions
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin_no1-shortcodes.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-shortcodes.php';
 	}
 
 	/**
@@ -226,6 +232,20 @@ class Plugin_No1 {
 	public function get_version() {
 		return $this->version;
 	}
+
+	/**
+	 * Defining all action and filter hooks for registering custom post types
+	 */
+	public function define_post_type_hooks() {
+		$plugin_post_types = new Plugin_No1_Post_Types( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'init', $plugin_post_types, 'init' );
+
+		/**
+		 * Save metabox input for CPT: book
+		 */
+		// $this->loader->add_action( 'save_post_book', $plugin_post_types, 'metabox_save_book', 10, 3 );
+	}
+
 
 	/**
 	 * Define all short codes for the plugin

@@ -21,7 +21,7 @@
  * @author     Christian Ortlieb <info@ortliebweb.com>
  */
 class Plugin_No1_Deactivator {
-
+// TODO: registrierte Hooks deaktivieren (was ist noch notwendig).
 	/**
 	 * Short Description. (use period)
 	 *

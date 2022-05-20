@@ -39,19 +39,19 @@ define( 'PLUGIN_NO1_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-plugin_no1-activator.php
+ * This action is documented in includes/class-plugin-no1-activator.php
  */
 function activate_plugin_no1() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin_no1-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-no1-activator.php';
 	Plugin_No1_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-plugin_no1-deactivator.php
+ * This action is documented in includes/class-plugin-no1-deactivator.php
  */
 function deactivate_plugin_no1() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin_no1-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-no1-deactivator.php';
 	Plugin_No1_Deactivator::deactivate();
 }
 
