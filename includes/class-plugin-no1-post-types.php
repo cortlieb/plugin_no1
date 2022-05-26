@@ -10,7 +10,7 @@
  * @subpackage Plugin_No1/includes
  */
 
-class Plugin_No1_Post_Types {    //TODO: Abfragen, ob es Klasse schon gibt?
+class Plugin_No1_Post_Types {    // TODO: Abfragen, ob es Klasse schon gibt?
 
 	/**
 	 * The ID of this plugin.
@@ -107,8 +107,8 @@ class Plugin_No1_Post_Types {    //TODO: Abfragen, ob es Klasse schon gibt?
 	}
 
 	public function save_reminder_cpt ($form_data) {
-		echo '<h2>Hier ist "save_reminer_cpt"</h2>'
-		var_dump($form_data);
+		echo '<h2>Hier ist "save_reminer_cpt"</h2>';
+		var_dump( $form_data );
 		die();
 
 	}
