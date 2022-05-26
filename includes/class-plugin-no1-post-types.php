@@ -10,7 +10,8 @@
  * @subpackage Plugin_No1/includes
  */
 
-class Plugin_No1_Post_Types {    // TODO: Abfragen, ob es Klasse schon gibt?
+class Plugin_No1_Post_Types {
+	// TODO: Abfragen, ob es Klasse schon gibt?
 
 	/**
 	 * The ID of this plugin.
@@ -40,8 +41,8 @@ class Plugin_No1_Post_Types {    // TODO: Abfragen, ob es Klasse schon gibt?
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		$this->plugin_name     = $plugin_name;
-		$this->version         = $version;
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
 	}
 
 	/**
@@ -106,9 +107,27 @@ class Plugin_No1_Post_Types {    // TODO: Abfragen, ob es Klasse schon gibt?
 		);
 	}
 
-	public function save_reminder_cpt ($form_data) {
-		echo '<h2>Hier ist "save_reminer_cpt"</h2>';
-		var_dump( $form_data );
+	// TODO: Kommentar einfügen
+	// TODO: alle Daten mit prefix versehen
+	// TODO: Doppeleinträge vermeiden (eine Emailadresse nur einmal eintragen), dann nur Meta-Daten ändern --> Hinweis ausgeben
+	/**
+	 *
+	 */
+
+	public function save_reminder_cpt( $form_data ) {
+		echo '<h2>Hier ist "save_remidner_cpt"</h2>';
+
+		$post_array         = array(
+			'post_title' => $form_data['email'],
+			'post_type'  => 'reminder',
+		);
+		$insert_post_result = wp_insert_post( $post_array, true );
+		var_dump( $insert_post_result );
+		//TODO: Abfragen: insert_post erfolgreich?
+		//TODO: Sind jeweilige array-Einträge verfügbar?
+		//TODO: Namenseintrag sanitizen.
+		update_post_meta( $insert_post_result, 'no1_reminder_name', $_POST['name'] );
+		update_post_meta( $insert_post_result, 'no1_reminder_date', $_POST['remember_date'] );
 		die();
 
 	}

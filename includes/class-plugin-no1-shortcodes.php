@@ -26,7 +26,7 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 		 * @access   private
 		 * @var      string    $version    The current version of this plugin.
 		 */
-		private $version;
+		private $version;    // TODO: Name nicht konsistent mit  $plugin_name
 
 		/**
 		 * @var all CSS for all shortcodes
@@ -81,9 +81,12 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 
 			// Check if nonce is correct.
 			if ( isset( $_POST['no1_remember_form_nonce'] ) && wp_verify_nonce( $_POST['no1_remember_form_nonce'], 'no1_submit_remember_form' ) ) {
-				// processing of form data
+				// processing of form data.
 
-				// server response
+				$plugin_post_types = new Plugin_No1_Post_Types( $this->plugin_name, $this->version );
+				$plugin_post_types->save_reminder_cpt( $_POST );
+
+				// server response.
 				$form_eva_result = 'success';
 			} else {
 				$form_eva_result = 'failed_nonce';
