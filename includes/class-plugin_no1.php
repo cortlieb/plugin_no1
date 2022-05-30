@@ -262,6 +262,11 @@ class Plugin_No1 {
 			array( $plugin_shortcodes, 'remember_form' )
 		);
 
+		add_shortcode(
+			'output_reminder',
+			array( $plugin_shortcodes, 'output_reminder' )
+		);
+
 	}
 
 }

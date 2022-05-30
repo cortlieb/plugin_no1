@@ -38,6 +38,22 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'PLUGIN_NO1_VERSION', '1.0.0' );
 
 /**
+ * Plugin base dir path.
+ * Used to locate plugin resources primarily code files
+ * Start at version 1.0.0
+ */
+define( 'NO1_BASE_DIR', plugin_dir_path( __FILE__ ));
+
+
+/**
+ * Plugin URL to access its resources by the browser.
+ * Use to access images/css/js files.
+ * Start at version 1.0.0
+ */
+define( 'NO1_PLUGIN_URL', plugin_dir_url( __FILE__));
+
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-plugin-no1-activator.php
  */

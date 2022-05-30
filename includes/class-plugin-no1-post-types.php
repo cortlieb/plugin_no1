@@ -122,10 +122,10 @@ class Plugin_No1_Post_Types {
 			'post_type'  => 'reminder',
 		);
 		$insert_post_result = wp_insert_post( $post_array, true );
-		var_dump( $insert_post_result );
-		//TODO: Abfragen: insert_post erfolgreich?
-		//TODO: Sind jeweilige array-Einträge verfügbar?
-		//TODO: Namenseintrag sanitizen.
+		echo '<pre>Neu angelegte post-id: ', var_dump( $insert_post_result ), '</pre>';
+		// TODO: Abfragen: insert_post erfolgreich?
+		// TODO: Sind jeweilige array-Einträge verfügbar?
+		// TODO: Namenseintrag sanitizen.
 		update_post_meta( $insert_post_result, 'no1_reminder_name', $_POST['name'] );
 		update_post_meta( $insert_post_result, 'no1_reminder_date', $_POST['remember_date'] );
 		die();
