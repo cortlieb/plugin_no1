@@ -128,10 +128,11 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 
 			<table>
 				<tr>
+					<th>Eintragsdatum</th>	
 					<th>ID</th>
 					<th>Email</th>
 					<th>Name</th>
-					<th>Datum</th>
+					<th>Erinnerungsdatum</th>
 				</tr>
 
 			<?php

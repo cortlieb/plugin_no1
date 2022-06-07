@@ -29,7 +29,10 @@ class Plugin_No1_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function activate() { //TODO: Event auch wieder un-registrieren, wenn Plugin deaktiviert wird
+		if ( ! wp_next_scheduled( 'no1_check_reminders' ) ) {
+			wp_schedule_event( time(), 'hourly', 'no1_check_reminders' );
+		}
 
 	}
 

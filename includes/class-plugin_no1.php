@@ -80,6 +80,7 @@ class Plugin_No1 {
 		$this->define_public_hooks();
 		$this->define_post_type_hooks();
 		$this->define_shortcode_hooks();
+		$this->define_cronjob_hooks();
 
 	}
 
@@ -105,7 +106,7 @@ class Plugin_No1 {
 		 * Helper functions
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/helper-functions.php';
-		
+
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
@@ -140,6 +141,11 @@ class Plugin_No1 {
 		 * The class responsible for defining all shortcode functions
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-shortcodes.php';
+
+		/**
+		 * The class responsible for defining all cronjob functions
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-no1-cronjobs.php';
 	}
 
 	/**
@@ -159,7 +165,7 @@ class Plugin_No1 {
 
 	}
 
-	/** 
+	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -173,7 +179,7 @@ class Plugin_No1 {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		$this->loader->add_action('admin_menu', $plugin_admin, 'add_admin_menu' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 
 	}
 
@@ -239,11 +245,6 @@ class Plugin_No1 {
 	public function define_post_type_hooks() {
 		$plugin_post_types = new Plugin_No1_Post_Types( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'init', $plugin_post_types, 'init' );
-
-		/**
-		 * Save metabox input for CPT: book
-		 */
-		// $this->loader->add_action( 'save_post_book', $plugin_post_types, 'metabox_save_book', 10, 3 );
 	}
 
 
@@ -269,4 +270,17 @@ class Plugin_No1 {
 
 	}
 
+	/**
+	 * Define all cronjob hooks for the plugin
+	 */
+	public function define_cronjob_hooks() {
+
+		$plugin_cronjobs = new Plugin_No1_Cronjobs(
+			$this->get_plugin_name(),
+			$this->get_version()
+		);
+
+		$this->loader->add_action( 'no1_check_reminders', $plugin_cronjobs, 'no1_check_reminders' );
+
+	}
 }
