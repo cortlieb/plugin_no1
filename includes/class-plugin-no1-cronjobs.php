@@ -45,7 +45,7 @@ if ( ! class_exists( 'Plugin_No1_Cronjobs' ) ) {
 		 *
 		 */
 		public function no1_check_reminders() {
-			no1_send_cronjob_mail();
+			no1_send_cronjob_mail('info@cortlieb.de', 'Dieter Glawischnik', '26.07.2022'); //TODO: Rückgabewert auswerten, z.B. logfile
 		}
 	}
 

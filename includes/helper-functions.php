@@ -17,13 +17,14 @@ function no1_send_remember_mail() {
 /**
  *
  */
-function no1_send_cronjob_mail() {
-	$time    = date( 'd.m.Y - H:i' );
-	$body    = 'Hallo Christian,<br>hier kommr eine Mail, die durch einen Cronjob ausgelöst wurde.<br><br>';
-	$body   .= 'Zeit für die Mail: ' . $time . '<br>';
-	$body   .= 'Zeitzone für die Mail: ' . wp_timezone_string() . '<br>';
-	$to      = 'info@ortliebweb.com';
-	$subject = 'Mail vom Cronjob';
-	$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: Christian Ortlieb <info@ortliebweb.com>' );
+function no1_send_cronjob_mail( $mail, $name, $reminder_date ) {
+	$body  = 'Hallo ' . $name . ',<br>';
+	$body .= 'hier die gewünschte Erinnerung.<br>';
+	$body .= 'Du hattest dir gewünscht, dass ich dich am ' . $reminder_date . ' daran erinnere, über eine eigene Website nachzudenken.<br> ';
+
+	$to      = $mail;
+	$subject = 'Eine eigene Website?';
+	$headers = array( 'Content-Type: text/html; charset=UTF-8', 'From: Christian Ortlieb < info@ortliebweb.com > ' );
+
 	return wp_mail( $to, $subject, $body, $headers );
 }
