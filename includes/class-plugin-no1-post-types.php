@@ -65,7 +65,7 @@ class Plugin_No1_Post_Types {
 					'name'               => _x( 'Reminder', 'post type general name', 'plugin_no1' ),
 					'singular_name'      => _x( 'Reminder', 'post type singular name', 'plugin_no1' ),
 					'menu_name'          => _x( 'Reminder', 'admin menu', 'plugin_no1' ),
-					'name_admin_bar'     => _x( 'Reminder', 'add new book on admin bar', 'plugin_no1' ),
+					'name_admin_bar'     => _x( 'Reminder', 'add new reminder on admin bar', 'plugin_no1' ),
 					'add_new'            => _x( 'Neuer Reminder', 'post_type', 'plugin_no1' ),
 					'add_new_item'       => __( 'Neuen reminder hinzufügen', 'plugin_no1' ),
 					'edit_item'          => __( 'Reminder bearbeiten', 'plugin_no1' ),
@@ -91,8 +91,6 @@ class Plugin_No1_Post_Types {
 				'capabilities'         => array(),
 				'map_meta_cap'         => null,
 				'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-				'register_meta_box_cb' => array( $this, 'register_metabox_book' ),
-				'taxonomies'           => array( 'genre' ),
 				'has_archive'          => true,
 				'rewrite'              => array(
 					'slug'       => 'reminder',
@@ -115,134 +113,15 @@ class Plugin_No1_Post_Types {
 	 */
 
 	public function save_reminder_cpt( $form_data ) {
-		echo '<h2>Hier ist "save_remidner_cpt"</h2>';
-
 		$post_array         = array(
 			'post_title' => $form_data['email'],
 			'post_type'  => 'reminder',
 		);
 		$insert_post_result = wp_insert_post( $post_array, true );
-		echo '<pre>Neu angelegte post-id: ', var_dump( $insert_post_result ), '</pre>';
 		// TODO: Abfragen: insert_post erfolgreich?
 		// TODO: Sind jeweilige array-Einträge verfügbar?
 		// TODO: Namenseintrag sanitizen.
 		update_post_meta( $insert_post_result, 'no1_reminder_name', $_POST['name'] );
 		update_post_meta( $insert_post_result, 'no1_reminder_date', $_POST['remember_date'] );
-		die();
-
-	}
-
-
-
-	/**
-	 * Register meta-box for CPT: book
-	 */
-	public function register_metabox_book( $post ) {
-
-		$is_gutenberg_active = (
-			function_exists( 'use_block_editor_for_post_type' ) &&
-			use_block_editor_for_post_type( get_post_type() )
-		);
-
-		add_meta_box(
-			'book-details',
-			( $is_gutenberg_active ) ? __( 'Book Details - Gutenberg', 'rocket-books' ) : __( 'Book Details - classic', 'rocket-books' ),
-			array( $this, 'book_metabox_display_cb' ),
-			'book',
-			// die naechsten beiden Parameter scheinen keine Auswirkung zu haben.
-			// Evtl. hängt das mit den neuen (ab WP 5.5) Pfeilen zum Verschieben von
-			// Metaboxen zusammen.
-			( $is_gutenberg_active ) ? 'side' : 'normal',
-			'high'
-		);
-
-	}
-
-
-
-	/**
-	 * Saving custom fields for CPT: books
-	 */
-	public function metabox_save_book( $post_id, $post, $update ) {
-
-		/**
-		 * Test, in dem dem aktuellen user die Möglchkeit entzogen wird, posts zu ändern.
-		 * --> funktioniert nicht - Grund unklar
-		 */
-		// $current_user = wp_get_current_user();
-		// $current_user->remove_cap( 'edit_posts' );
-
-		/**
-		 * Aber so funktioniert es, Hinweis aus Kursfragen
-		 */
-		// global $wp_roles;
-		// $wp_roles->add_cap( 'administrator', 'edit_posts' );
-
-		// $current_user = wp_get_current_user();
-		// echo '<pre>';
-		// var_dump( $current_user );
-		// echo '</pre>';
-		// die();
-
-		/**
-		 * Prevent saving if its triggered for:
-		 *  1. Auto save
-		 *  2. User does not have permission to edit
-		 *  3. invalid nonce
-		 */
-
-		// if this is an autosave, our form has not been submitted, so do nothing.
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
-
-		// check user permission
-		if ( ! current_user_can( 'edit_posts', 'post_id' ) ) {
-			print __( 'Sorry, you do not have access to edit post', 'rocket-books' );
-			exit;
-		}
-
-		// Verify nonce.
-		if (
-			! isset( $_POST['rbr_meta_box_nonce'] )
-			||
-			! wp_verify_nonce( $_POST['rbr_meta_box_nonce'], 'rbr_meta_box_nonce_action' )
-		) {
-			return null;
-			/**
-			 * War zu Testzwecken integriert, gibt aber ein Problem beim Neuanlegen von Büchern,
-			 * da dann der nonce noch nicht erzeugt wurde.
-			 * Daher wird jetzt nur returned.
-			 */
-			// print __( 'Sorry, your nonce did not verify.', 'rocket_books' );
-			// exit;
-		}
-
-		if ( array_key_exists( 'rbr-books-pages', $_POST ) ) {
-					// update_post_meta( get_the_ID(), 'rbr_book_page', $_POST['rbr-books-pages'] );
-			update_post_meta( $post_id, 'rbr_book_pages', absint( $_POST['rbr-books-pages'] ) );
-		}
-
-		if ( array_key_exists( 'rbr-is-featured', $_POST ) ) {
-			update_post_meta(
-				$post_id,
-				'rbr_is_featured',
-				( 'yes' === $_POST['rbr-is-featured'] ? 'yes' : 'no' )
-			);
-		}
-
-		if ( array_key_exists( 'rbr-book-format', $_POST ) ) {
-			$book_format = (
-			in_array(
-				$_POST['rbr-book-format'],
-				array( 'hardcover', 'audio', 'pdf' )
-			) ? sanitize_key( $_POST['rbr-book-format'] ) : 'pdf' );
-
-			update_post_meta(
-				$post_id,
-				'rbr_book_format',
-				$book_format
-			);
-		}
 	}
 }

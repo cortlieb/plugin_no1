@@ -52,19 +52,15 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 		 * Setup action / filter hooks
 		 */
 		public function setup_hooks() {
-			add_action( 'wp_enqueue_scripts', array( $this, 'register_style' ) );
-			add_action( 'get_footer', array( $this, 'maybe_enqueue_scripts' ) );
 			// register a handler for form 'remember_form'
 			add_action( 'admin_post_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
 			add_action( 'admin_post_nopriv_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
 		}
 
 		public function remember_form( $atts, $content ) {
-			// return 'I am a short code<br><strong>' . $content . '</strong><br>' . var_export( $atts, true );
 			ob_start();
 
-			if ( isset( $_REQUEST['info'] ) ) {
-				echo '<p>Ergebnis Formularauswertung: ' . $_REQUEST['info'] . '</p>';
+			if ( isset( $_REQUEST['info'] ) ) { //müssen noch weitere Dinge geprüft werden?
 				echo '<p>Hallo ' . esc_html( $_REQUEST['response']['name'] ) . ', das hat geklappt.</p>';
 				echo '<p>Wir werden dir zur gewünschten Zeit eine Erinnerung an ' . esc_html( $_REQUEST['response']['email'] ) . ' schicken!</p>';
 			} else {
@@ -76,8 +72,6 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 
 		public function no1_evaluate_remember_form() {
 			status_header( 200 );   // TODO: wird das Benötigt? Relikt aus irgendeinem Beispiel.
-			// echo '<h2>Hier ist die Formularauswertung</h2>';
-			// die();
 
 			// Check if nonce is correct.
 			if ( isset( $_POST['no1_remember_form_nonce'] ) && wp_verify_nonce( $_POST['no1_remember_form_nonce'], 'no1_submit_remember_form' ) ) {
@@ -91,12 +85,6 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			} else {
 				$form_eva_result = 'failed_nonce';
 			}
-
-			$result_email_send = no1_send_remember_mail();
-
-			echo 'Formularauswertung: ' . $form_eva_result . '<br>';
-			var_dump( $result_email_send );
-			die();
 
 			wp_redirect(
 				esc_url_raw(
@@ -112,36 +100,6 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			exit;
 
 			// exit - ja: wp_redirect muss von exit gefolgt werden?
-		}
-
-
-		/**
-		 * Register placeholder style
-		 */
-		public function register_style() {
-			wp_register_style(
-				$this->plugin_name . '-shortcodes',
-				NO1_PLUGIN_URL . 'public/css/rocket-books-shortcodes.css', // kann "null"sein, wenn kein CSS in der Datei steht, sondern nur Inline CSS genutzt wird
-			);
-		}
-
-		/**
-		 * Enqueue styles and scripts only if required
-		 */
-		public function maybe_enqueue_scripts() {
-
-			if ( ! empty( $this->shortcode_css ) ) {
-				// Step 3: Add CSS to placeholder style.
-				wp_add_inline_style(
-					$this->plugin_name . '-shortcodes',
-					$this->shortcode_css,
-				);
-
-				// Step 4: Enqueue style.
-				wp_enqueue_style(
-					$this->plugin_name . '-shortcodes',
-				);
-			}
 		}
 	}
 }
