@@ -2,3 +2,17 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ /* Reminder table headings  */
+ .form-table th {
+	 padding-left: 10px;
+ }
+
+ /* colorize table cells for reminder date  */
+ td.rem_date_exp {
+	background-color: lightsalmon;
+} 
+
+td.rem_date_future {
+	background-color: lightgreen;
+} 

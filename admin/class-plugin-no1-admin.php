@@ -105,16 +105,72 @@ class Plugin_No1_Admin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			__( 'Plugin No 1 Settings Page', 'ow_plugin_no1' ),
+			__( 'Plugin No 1 Data Page', 'ow_plugin_no1' ), //TODO: besserer Seitentitel
 			__( 'Plugin No 1', 'ow_plugin_no1' ),
 			'manage_options',
 			'plugin-no1',
-			function() {
-				echo "I'm page content";
-			},
+			array( $this, 'admin_page_display' ),
 			'dashicons-awards',
 			60,
 		);
 	}
+
+	/**
+	 * Admin page display
+	 */
+	public function admin_page_display() {
+		$this->output_reminder();
+	}
+
+	public function output_reminder() {
+
+		$loop_args = array(
+			'post_type'      => 'reminder',
+			'post_status'    => array( 'draft' ),
+			'posts_per_page' => -1,
+		);
+
+		// ob_start();
+
+		//TODO: Überschriften der folgenden Tabelle übersetzbar
+		//TODO: Kurzer Erklärungstext nach Seitentitel
+		?>
+
+		<div class="wrap">
+			<h1><?php echo get_admin_page_title(); ?></h1>
+			<?php settings_errors(); ?>
+
+		</div>
+
+		<table class="form-table widefat striped">
+			<tr>
+				<th class="row-title">Eintragsdatum</th>	
+				<th>ID</th>
+				<th>Email</th>
+				<th>Name</th>
+				<th>Erinnerungsdatum</th>
+			</tr>
+
+		<?php
+
+		$loop = new WP_Query( $loop_args );
+
+		while ( $loop->have_posts() ) :
+			$loop->the_post();
+			include NO1_BASE_DIR . 'admin/partials/partials_reminder_list.php';
+
+		endwhile;
+
+		/* Restore original post */
+		wp_reset_postdata();
+
+		?>
+		</table>
+		<?php
+
+		// return ob_get_clean();
+
+	}
+
 
 }

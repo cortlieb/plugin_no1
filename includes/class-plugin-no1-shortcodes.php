@@ -114,47 +114,6 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			// exit - ja: wp_redirect muss von exit gefolgt werden?
 		}
 
-		public function output_reminder( $atts, $content ) {
-			// return 'I am a short code<br><strong>' . $content . '</strong><br>' . var_export( $atts, true );
-
-			$loop_args = array(
-				'post_type'      => 'reminder',
-				'post_status'    => array( 'draft' ),
-				'posts_per_page' => -1,
-			);
-
-			ob_start();
-			?>
-
-			<table>
-				<tr>
-					<th>Eintragsdatum</th>	
-					<th>ID</th>
-					<th>Email</th>
-					<th>Name</th>
-					<th>Erinnerungsdatum</th>
-				</tr>
-
-			<?php
-
-			$loop = new WP_Query( $loop_args );
-
-			while ( $loop->have_posts() ) :
-				$loop->the_post();
-				include NO1_BASE_DIR . 'public/partials/partials_reminder_list.php';
-
-			endwhile;
-
-			/* Restore original post */
-			wp_reset_postdata();
-
-			?>
-			</table>
-			<?php
-
-			return ob_get_clean();
-
-		}
 
 		/**
 		 * Register placeholder style

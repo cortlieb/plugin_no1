@@ -12,9 +12,8 @@ $current_date = current_datetime();
 // Check if reminder date is reached.
 $reminder_date_expired = $current_date >= $reminder_date;
 
+// Output current reminder data in a table row
 ?>	
-
-<!-- Output current reminder data in a table row -->
 <tr>
 	<td><?php echo get_the_date(); ?></td>	
 	<td><?php the_ID(); ?></td>
