@@ -123,5 +123,6 @@ class Plugin_No1_Post_Types {
 		// TODO: Namenseintrag sanitizen.
 		update_post_meta( $insert_post_result, 'no1_reminder_name', $_POST['name'] );
 		update_post_meta( $insert_post_result, 'no1_reminder_date', $_POST['remember_date'] );
+		update_post_meta( $insert_post_result, 'no1_reminder_sent', false );
 	}
 }

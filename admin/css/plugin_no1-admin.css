@@ -9,10 +9,14 @@
  }
 
  /* colorize table cells for reminder date  */
- td.rem_date_exp {
-	background-color: lightsalmon;
+ td.rem_date_due {
+	background-color: yellow;
 } 
 
 td.rem_date_future {
 	background-color: lightgreen;
+} 
+
+td.rem_date_invalid {
+	background-color: orange;
 } 

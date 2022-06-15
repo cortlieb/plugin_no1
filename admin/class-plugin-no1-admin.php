@@ -134,6 +134,7 @@ class Plugin_No1_Admin {
 
 		//TODO: Überschriften der folgenden Tabelle übersetzbar
 		//TODO: Kurzer Erklärungstext nach Seitentitel
+		//TODO: 'X' bei gesendet durch Icon ersetzen
 		?>
 
 		<div class="wrap">
@@ -146,6 +147,7 @@ class Plugin_No1_Admin {
 			<tr>
 				<th class="row-title">Eintragsdatum</th>	
 				<th>ID</th>
+				<th>gesendet</th>
 				<th>Email</th>
 				<th>Name</th>
 				<th>Erinnerungsdatum</th>
