@@ -59,36 +59,44 @@ if ( ! class_exists( 'Plugin_No1_Cronjobs' ) ) {
 			while ( $loop->have_posts() ) :
 				$loop->the_post();
 				$evaluation_result = $this->evaluate_reminder_date( get_the_ID() );
-				switch ( $evaluation_result ) {  //TODO: returnwert 'invalid' bearbeiten (post löschen?)
+				switch ( $evaluation_result ) {
+					case 'invalid':
+						// mark reminder as permanently failed when no valid reminder date is avaialable.
+						update_post_meta( get_the_ID(), 'no1_reminder_sent', 'perm_failed' );
+						break;
 					case 'duefuture':
 						$log_entry = 'ID: ' . get_the_ID() . '- due only in the future.';
 						write_log( $log_entry );
 						break;
 					case 'duedate':
-						// TODO: nur senden, wenn noch nicht gesendet (cron job läuft stündlich)
-						$send_mail_result = no1_send_cronjob_mail(
-							'info@cortlieb.de',
-							esc_html( get_post_meta( get_the_ID(), 'no1_reminder_name', true ) ),
-							esc_html( get_post_meta( get_the_ID(), 'no1_reminder_date', true ) ) // TODO:Datumsformat anpassen
-						 );
-						update_post_meta( get_the_ID(), 'no1_reminder_sent', true ); // TODO: erst Rückgabewert prüfen.
-						$log_entry = 'ID: ' . get_the_ID() . '- mail sent: ' . $send_mail_result;
-						write_log( $log_entry );
-						break;
 					case 'due<7':
-						// TODO: prüfen, ob auch schon erfolgreich gesendet, sonst noch mal senden
-						$log_entry = 'ID: ' . get_the_ID() . '- mail sent, wait for removing reminder. ';
-						write_log( $log_entry );
+						// send reminder mail if it was not sent up to now or sending failed in previous attempt.
+						if ( 'not_sent' === get_post_meta( get_the_ID(), 'no1_reminder_sent', true ) ||
+						'failed' === get_post_meta( get_the_ID(), 'no1_reminder_sent', true ) ) {
+							$send_mail_result = no1_send_cronjob_mail(
+								the_title(),
+								esc_html( get_post_meta( get_the_ID(), 'no1_reminder_name', true ) ),
+								esc_html( get_post_meta( get_the_ID(), 'no1_reminder_date', true ) ) // TODO:Datumsformat anpassen.
+							);
+							// if sending reminder mail was successful
+							if ( $send_mail_result ) {
+								update_post_meta( get_the_ID(), 'no1_reminder_sent', 'sent' );
+							} else {
+								update_post_meta( get_the_ID(), 'no1_reminder_sent', 'failed' );
+							}
+							$log_entry = 'ID: ' . get_the_ID() . '- mail sent: ' . $send_mail_result;
+							write_log( $log_entry );
+						}
 						break;
 					case 'due+7':
-						$log_entry     = 'ID: ' . get_the_ID();
-						$delete_result = wp_delete_post( get_the_ID() );
-						if ( ( false == $delete_result ) || ( null == $delete_result ) ) {
-							$log_entry .= ' - delete failed!';
-						} else {
-							$log_entry .= ' - deleted succesfully!';
+						$reminder_sent_status = get_post_meta( get_the_ID(), 'no1_reminder_sent', true );
+						// if mail for reminder is still not sent (after 7 days) status is set to 'permanently failed'
+						if ( 'sent' !== $reminder_sent_status ) {
+							update_post_meta( get_the_ID(), 'no1_reminder_sent', 'perm_failed' );
+							$log_entry  = 'ID: ' . get_the_ID();
+							$log_entry .= ' - after 7 days still in status: ' . $reminder_sent_status . ' --> sending permanently failed!';
+							write_log( $log_entry );
 						}
-						write_log( $log_entry );
 						break;
 					default:
 				}
@@ -155,4 +163,3 @@ if ( ! class_exists( 'Plugin_No1_Cronjobs' ) ) {
 	}
 
 }
-

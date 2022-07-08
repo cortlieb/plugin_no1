@@ -62,16 +62,16 @@ class Plugin_No1_Admin {
 	public function enqueue_styles() {
 
 		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_No1_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_No1_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		* This function is provided for demonstration purposes only.
+		*
+		* An instance of this class should be passed to the run() function
+		* defined in Plugin_No1_Loader as all of the hooks are defined
+		* in that particular class.
+		*
+		* The Plugin_No1_Loader will then create the relationship
+		* between the defined hooks and the functions defined in this
+		* class.
+		*/
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin_no1-admin.css', array(), $this->version, 'all' );
 
@@ -85,16 +85,16 @@ class Plugin_No1_Admin {
 	public function enqueue_scripts() {
 
 		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_No1_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_No1_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		* This function is provided for demonstration purposes only.
+		*
+		* An instance of this class should be passed to the run() function
+		* defined in Plugin_No1_Loader as all of the hooks are defined
+		* in that particular class.
+		*
+		* The Plugin_No1_Loader will then create the relationship
+		* between the defined hooks and the functions defined in this
+		* class.
+		*/
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin_no1-admin.js', array( 'jquery' ), $this->version, false );
 
@@ -105,7 +105,7 @@ class Plugin_No1_Admin {
 	 */
 	public function add_admin_menu() {
 		add_menu_page(
-			__( 'Plugin No 1 Data Page', 'ow_plugin_no1' ), //TODO: besserer Seitentitel
+			__( 'Plugin No 1 Data Page', 'ow_plugin_no1' ), // TODO: besserer Seitentitel
 			__( 'Plugin No 1', 'ow_plugin_no1' ),
 			'manage_options',
 			'plugin-no1',
@@ -132,27 +132,27 @@ class Plugin_No1_Admin {
 
 		// ob_start();
 
-		//TODO: Überschriften der folgenden Tabelle übersetzbar
-		//TODO: Kurzer Erklärungstext nach Seitentitel
-		//TODO: 'X' bei gesendet durch Icon ersetzen
+		// TODO: Überschriften der folgenden Tabelle übersetzbar
+		// TODO: Kurzer Erklärungstext nach Seitentitel
+		// TODO: 'X' bei gesendet durch Icon ersetzen
 		?>
-
+		
 		<div class="wrap">
-			<h1><?php echo get_admin_page_title(); ?></h1>
-			<?php settings_errors(); ?>
-
+		<h1><?php echo get_admin_page_title(); ?></h1>
+		<?php settings_errors(); ?>
+		
 		</div>
-
+		
 		<table class="form-table widefat striped">
-			<tr>
-				<th class="row-title">Eintragsdatum</th>	
-				<th>ID</th>
-				<th>gesendet</th>
-				<th>Email</th>
-				<th>Name</th>
-				<th>Erinnerungsdatum</th>
-			</tr>
-
+		<tr>
+		<th class="row-title">Eintragsdatum</th>	
+		<th>ID</th>
+		<th>gesendet</th>
+		<th>Email</th>
+		<th>Name</th>
+		<th>Erinnerungsdatum</th>
+		</tr>
+		
 		<?php
 
 		$loop = new WP_Query( $loop_args );
@@ -171,8 +171,19 @@ class Plugin_No1_Admin {
 		<?php
 
 		// return ob_get_clean();
-
 	}
 
+	/**
+	* Fragment zum Löschen von Remindern
+	*/
+
+	/*
+	$delete_result = wp_delete_post( get_the_ID() );
+	if ( ( false == $delete_result ) || ( null == $delete_result ) ) {
+		$log_entry .= ' - delete failed!';
+	} else {
+		$log_entry .= ' - deleted succesfully!';
+	}
+	*/
 
 }

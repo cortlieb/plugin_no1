@@ -29,9 +29,25 @@ if ( empty( $post_meta_date ) ) {
 <tr>
 	<td><?php echo get_the_date(); ?></td>		
 	<td><?php the_ID(); ?></td>
-	<td><?php 
-		echo get_post_meta(	get_the_ID(), 'no1_reminder_sent', true	) ? 'X' : '/';
-		?>
+	<td>
+	<?php
+	switch ( get_post_meta( get_the_ID(), 'no1_reminder_sent', true ) ) {
+		case 'not_sent':
+			echo '<span class="dashicons dashicons-clock"></span>';
+			break;
+		case 'sent':
+			echo '<span class="dashicons dashicons-email-alt2"></span>';
+			break;
+		case 'failed':
+			echo '<span class="dashicons dashicons-no-alt"></span>';
+			break;
+		case 'perm_failed':
+			echo '<span class="dashicons dashicons-dismiss"></span>';
+			break;	
+		default:
+			echo '<span class="dashicons dashicons-warning"></span>';
+	}
+	?>
 	</td>
 	<td><?php the_title(); ?></td>
 	<td>
