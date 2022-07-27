@@ -17,10 +17,12 @@ function no1_send_remember_mail() {
 /**
  *
  */
-function no1_send_cronjob_mail( $mail, $name, $reminder_date ) {
+function no1_send_cronjob_mail( $mail, $name, $message, $reminder_date ) {
 	$body  = 'Hallo ' . $name . ',<br>';
 	$body .= 'hier die gewünschte Erinnerung.<br>';
 	$body .= 'Du hattest dir gewünscht, dass ich dich am ' . $reminder_date . ' daran erinnere, über eine eigene Website nachzudenken.<br> ';
+	$body .= 'Du hattest dazu noch diese Gedanken:<br>';
+	$body .= $message . '<br>';
 	$body .= '<br>Gruß Christian';
 
 	$to      = $mail;

@@ -93,7 +93,7 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 							'info'     => $form_eva_result,
 							'response' => $_POST,
 						),
-						home_url( 'index.php/test-shortcode-no1/' )  // muss noch verallgemeinert werden.
+						home_url( 'index.php/test-shortcode-no1/' )  // TODO: muss noch verallgemeinert werden!
 					)
 				)
 			);

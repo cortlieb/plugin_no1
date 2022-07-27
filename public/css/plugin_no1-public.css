@@ -3,6 +3,17 @@
  * included in this file.
  */
 
- form input {
+ form input,
+ form textarea,
+ form label {
 	 margin: 10px;
+ }
+
+ form input#date {
+	background: #fafafa;
+	padding: 10px;
+ }
+
+ form textarea {
+	height: 120px;
  }

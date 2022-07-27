@@ -82,7 +82,7 @@ class Plugin_No1_Post_Types {
 				'exclude_from_search'  => false,
 				'publicly_queryable'   => true,
 				'show_ui'              => true,
-				'show_in_menu'         => true,
+				'show_in_menu'         => false,
 				'show_in_nav_menus'    => true,
 				'show_in_admin_bar'    => true,
 				'menu_position'        => 20,
@@ -122,6 +122,7 @@ class Plugin_No1_Post_Types {
 		// TODO: Sind jeweilige array-Einträge verfügbar?
 		// TODO: Namenseintrag sanitizen.
 		update_post_meta( $insert_post_result, 'no1_reminder_name', $_POST['name'] );
+		update_post_meta( $insert_post_result, 'no1_reminder_message', $_POST['message'] );
 		update_post_meta( $insert_post_result, 'no1_reminder_date', $_POST['remember_date'] );
 		update_post_meta( $insert_post_result, 'no1_reminder_sent', 'not_sent' );
 	}

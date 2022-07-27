@@ -74,8 +74,9 @@ if ( ! class_exists( 'Plugin_No1_Cronjobs' ) ) {
 						if ( 'not_sent' === get_post_meta( get_the_ID(), 'no1_reminder_sent', true ) ||
 						'failed' === get_post_meta( get_the_ID(), 'no1_reminder_sent', true ) ) {
 							$send_mail_result = no1_send_cronjob_mail(
-								the_title(),
+								the_title( '', '', false ),
 								esc_html( get_post_meta( get_the_ID(), 'no1_reminder_name', true ) ),
+								esc_html( get_post_meta( get_the_ID(), 'no1_reminder_message', true ) ),
 								esc_html( get_post_meta( get_the_ID(), 'no1_reminder_date', true ) ) // TODO:Datumsformat anpassen.
 							);
 							// if sending reminder mail was successful
