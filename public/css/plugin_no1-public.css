@@ -17,3 +17,10 @@
  form textarea {
 	height: 120px;
  }
+
+ .dashicons.dashicons-saved {
+	color: green;
+	font-size: 100px;
+	height: 100px;
+	width: auto;
+ }

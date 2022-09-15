@@ -23,9 +23,11 @@
 // create hidden field for nonce to verify submission.
 wp_nonce_field( 'no1_submit_remember_form', 'no1_remember_form_nonce' );
 ?>
-<div id="wait">
-</div>
+</form>
+ <!-- TODO:dieses div entfernen, Zweck nicht mehr klar -->
+<!-- <div id="wait">
+</div> -->
 <div id="no1_remember_form_feedback"> 
 </div>
-</form>
+
 

@@ -20,7 +20,13 @@
 			})
 
 				.done(function (response) { // response from the PHP action
-					$("#no1_remember_form_feedback").html("<h2>The request was successful </h2><br>" + response);
+					//TODO: response ist immer leer - prüfen, was in Beispielprojekt anders ist (nds-admin-form-demo-master)
+					var html_response = "<span class=\"dashicons dashicons-saved\"></span>";
+					html_response += "<h3>Das hat geklappt.</h3>";
+					//TODO: Namen und Emailadresse einfügen (s. direkte Serverübertragung)
+					html_response += "<p>Wir schicken dir zur gewünschten Zeit eine Erinnerung!</p>";
+					$("#no1_remember_form_feedback").html(html_response);
+					console.log(response);
 				})
 
 				// something went wrong  
@@ -28,8 +34,9 @@
 					$("#no1_remember_form_feedback").html("<h2>Something went wrong.</h2><br>");
 				})
 
-				// after all this time?
+				// called in each case (success or fail)
 				.always(function () {
+					$("#no1_remember_form").hide(1000); //hide form (with animation)
 					event.target.reset();
 				});
 
