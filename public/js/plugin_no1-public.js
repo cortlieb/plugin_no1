@@ -1,32 +1,40 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	$(document).ready(function () {
+		$('#no1_remember_form').submit(function (event) {
+			console.log( 'hier beginnt das Script' );	
+			event.preventDefault(); // Prevent the default form submit.            
 
-})( jQuery );
+			// serialize the form data
+			var ajax_form_data = $("#no1_remember_form").serialize();
+
+			//add our own ajax check as X-Requested-With is not always reliable
+			ajax_form_data = ajax_form_data + '&ajaxrequest=true&submit=Submit+Form';
+			console.log(params.ajaxurl);
+
+			$.ajax({
+				url: params.ajaxurl, // domain/wp-admin/admin-ajax.php
+				type: 'post',
+				data: ajax_form_data
+			})
+
+				.done(function (response) { // response from the PHP action
+					$("#no1_remember_form_feedback").html("<h2>The request was successful </h2><br>" + response);
+				})
+
+				// something went wrong  
+				.fail(function () {
+					$("#no1_remember_form_feedback").html("<h2>Something went wrong.</h2><br>");
+				})
+
+				// after all this time?
+				.always(function () {
+					event.target.reset();
+				});
+
+		});
+
+	});
+
+})(jQuery);

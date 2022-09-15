@@ -55,12 +55,14 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			// register a handler for form 'remember_form'
 			add_action( 'admin_post_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
 			add_action( 'admin_post_nopriv_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
+			add_action( 'wp_ajax_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
+			add_action( 'wp_ajax_nopriv_no1_remember_form_response', array( $this, 'no1_evaluate_remember_form' ) );
 		}
 
 		public function remember_form( $atts, $content ) {
 			ob_start();
 
-			if ( isset( $_REQUEST['info'] ) ) { //müssen noch weitere Dinge geprüft werden?
+			if ( isset( $_REQUEST['info'] ) ) { //TODO: müssen noch weitere Dinge geprüft werden? --> der Inhalt von 'info' wird nicht geprüft, nur ob es da ist!
 				echo '<p>Hallo ' . esc_html( $_REQUEST['response']['name'] ) . ', das hat geklappt.</p>';
 				echo '<p>Wir werden dir zur gewünschten Zeit eine Erinnerung an ' . esc_html( $_REQUEST['response']['email'] ) . ' schicken!</p>';
 			} else {
@@ -85,6 +87,8 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			} else {
 				$form_eva_result = 'failed_nonce';
 			}
+			wp_die();  // daurch wird das redirect unterbunden. Wenn man die normale Form submission als Fallback haben möchte, sollte
+			           // das aber nur passieren, wenn der AJAX-Request nicht passiert ist, sonst werden die Seiten-Elemente zweimal angezeigt.
 
 			wp_redirect(
 				esc_url_raw(

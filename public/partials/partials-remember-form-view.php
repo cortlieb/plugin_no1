@@ -6,7 +6,7 @@
 ?>		
 
 
-<form action="<?php echo esc_attr( admin_url( 'admin-post.php' ) ); ?>" method="post">
+<form action="<?php echo esc_attr( admin_url( 'admin-post.php' ) ); ?>" method="post" id="no1_remember_form">
 <input type="text" id="name" name="name" placeholder="Name*" required>
 <br>
 <input type="email" id="email" name="email" placeholder="E-Mail Adresse*" required>
@@ -25,6 +25,7 @@ wp_nonce_field( 'no1_submit_remember_form', 'no1_remember_form_nonce' );
 ?>
 <div id="wait">
 </div>
-<div id="response"> 
+<div id="no1_remember_form_feedback"> 
 </div>
 </form>
+
