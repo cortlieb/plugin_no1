@@ -31,7 +31,11 @@
 
 				// something went wrong  
 				.fail(function () {
-					$("#no1_remember_form_feedback").html("<h2>Something went wrong.</h2><br>");
+					var html_response = "<span class=\"dashicons dashicons-no\"></span>";
+					html_response += "<h3>Irgendetwas hat nicht funktioniert.</h3>";
+					//TODO: Wie kann man von hier einen Eintrag ins PHP-Logfile schreiben?
+					html_response += "<p>Das tut mir leid! Wenn du mir eine Mail schickst, kümmere ich mich darum!</p>";
+					$("#no1_remember_form_feedback").html(html_response);
 				})
 
 				// called in each case (success or fail)

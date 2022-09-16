@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       Plugin No 1
  * Plugin URI:        https://www.ortliebweb.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.1
+ * Description:       Vollautomatische Erinnerungen für Website-Besucher.
+ * Version:           1.0.2
  * Author:            Christian Ortlieb
  * Author URI:        https://www.ortliebweb.com
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NO1_VERSION', '1.0.1' );
+define( 'PLUGIN_NO1_VERSION', '1.0.2' );
 
 /**
  * Plugin base dir path.

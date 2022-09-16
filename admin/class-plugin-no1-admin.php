@@ -134,11 +134,11 @@ class Plugin_No1_Admin {
 
 		// TODO: Überschriften der folgenden Tabelle übersetzbar
 		// TODO: Kurzer Erklärungstext nach Seitentitel
-		// TODO: 'X' bei gesendet durch Icon ersetzen
+		// TODO: muss get_admin_page_title() escaped werden?
 		?>
 		
 		<div class="wrap">
-		<h1><?php echo get_admin_page_title(); ?></h1>
+		<h1><?php echo get_admin_page_title(); ?></h1>  
 		<?php settings_errors(); ?>
 		
 		</div>

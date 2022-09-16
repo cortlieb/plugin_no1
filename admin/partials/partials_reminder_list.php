@@ -63,10 +63,9 @@ if ( empty( $post_meta_date ) ) {
 	</td>
 	<td class=
 		<?php
-		// TODO: escapen.
-		echo 'rem_date_' . $reminder_date_state; // class to color date-field.
+		echo 'rem_date_' . esc_attr( $reminder_date_state ); // class to color date-field.
 		echo '>';
-		// output reminder date hen it is valid.
+		// output reminder date when it is valid.
 		if ( 'invalid' !== $reminder_date_state ) {
 			echo esc_html( $reminder_date->format( get_option( 'date_format' ) ) );
 		} else {

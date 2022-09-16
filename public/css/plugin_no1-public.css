@@ -24,3 +24,10 @@
 	height: 100px;
 	width: auto;
  }
+
+ .dashicons.dashicons-no {
+	color: red;
+	font-size: 100px;
+	height: 100px;
+	width: auto;
+ }

@@ -89,6 +89,7 @@ if ( ! class_exists( 'Plugin_No1_Shortcodes' ) ) {
 			}
 			wp_die();  // daurch wird das redirect unterbunden. Wenn man die normale Form submission als Fallback haben möchte, sollte
 			           // das aber nur passieren, wenn der AJAX-Request nicht passiert ist, sonst werden die Seiten-Elemente zweimal angezeigt.
+					   //TODO: normale Formsubmission (Ohne AJAX, bei abgeschaltetem Javascript)
 
 			wp_redirect(
 				esc_url_raw(
